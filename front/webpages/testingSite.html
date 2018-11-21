@@ -1,0 +1,112 @@
+<!doctype html>
+<html lang="en">
+<html lang="en">
+  <head>
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+    <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
+
+    <!--[if IE]>
+        <script
+        src="http://html5shim.googlecode.com/svn/trunk/html5.js">
+        </script>
+    <![endif]-->
+<!--      <script src="https://code.jquery.com/jquery-1.10.2.js"></script> -->
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css" integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO" crossorigin="anonymous">
+    <link rel="stylesheet"  type="text/css" href="../css/detailProject.css">
+    <!--Font awesome -->
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.2.0/css/all.css" integrity="sha384-hWVjflwFxL6sNzntih27bfxkr27PmbbK/iSvJ+a4+0owXq79v+lsFkW54bOGbiDQ" crossorigin="anonymous">
+     <link rel="icon" href="../images/logo.ico">
+     <script type="text/javascript">
+        google.charts.load('current', {'packages':['corechart', 'controls']});
+        google.charts.setOnLoadCallback(drawStuff);
+
+        function drawStuff() {
+          var maxDataPoints=6;
+          var chart = new google.visualization.LineChart($('#chart_div')[0]);
+               var options={
+                  // Use the same chart area width as the control for axis alignment.
+                  'hAxis':{
+                      'format':'hh:mm:ss a'
+                  },
+                };
+          var data=new google.visualization.DataTable();
+          data.addColumn('string', 'Date');
+          data.addColumn('number', 'Noise Level');
+
+          var myView=new google.visualization.DataView(data);
+myView.hideRows()
+         async function addDataPoint(dataPoint){
+          let rows=data.getNumberOfRows();
+          let columns=data.getNumberOfColumns();
+              if (rows > maxDataPoints) {
+                data.removeRows(0);
+              }
+
+              await data.addRow([getTime(), dataPoint.value]);
+                            console.log(data.getValue(rows-1,columns-1));
+              chart.draw(data);
+          }
+
+          function getTime(){
+            let d=new Date();
+            return d.toLocaleTimeString();
+           }
+          function doPoll() { //#F
+            $.getJSON('http://localhost:3002/api/sensors',
+              function (result) {
+                addDataPoint(result); //#G
+                setTimeout(doPoll, 1000);
+              });
+          }
+          doPoll();
+        }
+
+</script>
+    <title>SLR Projects Page</title>
+  </head>
+
+  <body>
+    <nav class="navbar fixed-top  navbar-dark navbar-inverse  navbar-expand-lg">
+      <div class="container-fluid">
+      <a class="navbar-brand" href="#">
+        SLR Consulting
+      </a>
+      <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbar-collapse"
+        aria-controls="navbar-collapse" aria-expanded="false" aria-label="Toggle navigation">
+          <span class="navbar-toggler-icon"></span>
+      </button>
+      <div class="navbar-collapse collapse" id="navbar-collapse">
+        <ul class="navbar-nav ml-auto">
+          <li class="nav-item"><a  class=" nav-link" href="#">Account Settings</a></li>
+          <li class="nav-item"><a class=" nav-link" href="#contact-us">Sign Out</a></li>
+          </ul>
+        </div>
+      </div>
+      </nav>
+     <div class="cover-container w-100 h-100 px-5 py-5 pt-md-5 pb-md-5 mt-5 text-center">
+          <h1 class="cover-heading">Project Info</h1>
+          <p class="lead">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aenean aliquet sem nec eleifend mattis. Etiam
+          vulputate tristique lectus. Integer tincidunt nisi accumsan erat consectetur pellentesque. Vivamus commodo est vitae dolor
+        ulputate pharetra. Sed imperdiet lacus non mollis.</p>
+    <div id="dashboard_div">
+            <div id="chart_div"  style="width: 90%; height: 300px;"></div>
+            <div id="filter_div" style="width: 90%; height: 100px;"></div>
+            <div id="button_div" class="btn btn-lg btn-danger" onclick="pauseStream();">Pause</div>
+    </div>
+<script type="text/javascript">
+  function pauseStream(){
+
+  }
+</script>
+
+   <!-- Optional JavaScript -->
+    <!-- jQuery first, then Popper.js, then Bootstrap JS -->
+<!--     <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js" integrity="sha384-ZMP7rVo3mIykV+2+9J3UJ46jBk0WLaUAdn689aCwoqbBJiSnjAK/l8WvCWPIPm49" crossorigin="anonymous"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/js/bootstrap.min.js" integrity="sha384-ChfqqxuZUCnJSK3+MXmPNIyE6ZbWh2IMqE241rYiqJxyMiZ6OW/JmZQ5stwEULTy" crossorigin="anonymous"></script> -->
+  </body>
+</html>

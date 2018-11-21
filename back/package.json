@@ -1,0 +1,23 @@
+{
+  "name": "back",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "config": "^2.0.1",
+    "express-async-errors": "^3.1.1",
+    "fs": "0.0.1-security",
+    "fs-extra": "^7.0.1",
+    "joi": "^13.6.0",
+    "jsonwebtoken": "^8.3.0",
+    "mongoose": "^5.2.10",
+    "morgan": "^1.9.1",
+    "serialport": "^7.0.2",
+    "winston": "^3.1.0"
+  }
+}

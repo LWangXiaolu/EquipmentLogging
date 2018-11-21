@@ -1,0 +1,4 @@
+{
+  "jwtPrivateKey": "project1",
+  "db":"mongodb:localhost/project1"
+}
