@@ -3,6 +3,7 @@ const app = express();
 
 const sensorRoutes = require('./../routes/sensors');
 const authRoutes = require('./../routes/auth');
+const userRoutes=require('./../routes/users')
 
 module.exports=function(app){
 //cors
@@ -16,5 +17,5 @@ app.use(function(req, res, next) {
 //routes
 app.use('/api/sensors', sensorRoutes);
 app.use('/api/auth', authRoutes);
-
+app.use('/api/users',userRoutes)
 }

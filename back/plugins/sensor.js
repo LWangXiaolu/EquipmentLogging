@@ -9,7 +9,7 @@ const model = resources.sensor;
 const pluginName = model.name;
 let localParams = {'simulate': false, 'frequency': 5000}; //default,change anytime
 
-exports.start = function (params) {
+ exports.start= function (params) {
   localParams = params;
   if (params.simulate) {
     simulate();

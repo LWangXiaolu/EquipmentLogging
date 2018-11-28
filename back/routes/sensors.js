@@ -1,10 +1,8 @@
 const express = require('express'),
-  router = express.Router(), //#A
+  router = express.Router(),
   resources = require('./../resources/model');
 
-router.get('/', function (req, res) { //#B
-
-  res.send(resources.sensor);  //#C
-
+router.get('/', function (req, res) {
+  res.send(resources.sensor);
 });
-module.exports = router; //#F
+module.exports = router;
