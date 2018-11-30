@@ -31,23 +31,21 @@
                   // Use the same chart area width as the control for axis alignment.
                   'hAxis':{
                       'format':'hh:mm:ss a'
-                  },
+                  }
                 };
           var data=new google.visualization.DataTable();
           data.addColumn('string', 'Date');
           data.addColumn('number', 'Noise Level');
-//this is a test change line
           var myView=new google.visualization.DataView(data);
-myView.hideRows()
+
          async function addDataPoint(dataPoint){
           let rows=data.getNumberOfRows();
           let columns=data.getNumberOfColumns();
               if (rows > maxDataPoints) {
                 data.removeRows(0);
               }
-
               await data.addRow([getTime(), dataPoint.value]);
-                            console.log(data.getValue(rows-1,columns-1));
+              console.log(data.getValue(rows-1,columns-1));
               chart.draw(data);
           }
 
@@ -55,15 +53,28 @@ myView.hideRows()
             let d=new Date();
             return d.toLocaleTimeString();
            }
-          function doPoll() { //#F
-            $.getJSON('http://localhost:3002/api/sensors',
-              function (result) {
-                addDataPoint(result); //#G
+
+          function doPoll() {
+            $.ajax({
+              url:'http://localhost:3002/api/sensors',
+              type:'GET',
+              dataType:'json',
+              success: function(result){
+                console.log('1234');
+                addDataPoint(result);
                 setTimeout(doPoll, 1000);
-              });
-          }
+              },
+             error: function (xhr, ajaxOptions, thrownError) {
+                console.log(xhr.responseText);
+                return  $("#validation-response").html(xhr.responseText).css({"color":"red"});
+            },
+            // beforeSend: function(request){
+            //   request.setRequestHeader('x-auth-token','eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI1YmZkZjc3Njk2NzlhMDI4NzAyZTk5YTEiLCJpYXQiOjE1NDM1NTA4MTV9.M-lyuZbrAccm559Ap6jXAo7aSj4eV01b1p6VeFTzyA0')
+            // }
+          });
           doPoll();
         }
+      }
 
 </script>
     <title>SLR Projects Page</title>
@@ -97,6 +108,7 @@ myView.hideRows()
             <div id="filter_div" style="width: 90%; height: 100px;"></div>
             <div id="button_div" class="btn btn-lg btn-danger" onclick="pauseStream();">Pause</div>
     </div>
+    <small id="validation-response"></small>
 <script type="text/javascript">
   function pauseStream(){
 

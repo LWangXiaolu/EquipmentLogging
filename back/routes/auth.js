@@ -1,10 +1,12 @@
+//this API is to authenticate a user login
 const express = require('express');
 const router = express.Router();
 const {User} = require('../models/user');
 const mongoose = require('mongoose');
 const Joi=require('joi');
 const bcrypt=require('bcrypt');
-//this API is to authenticate a user login
+const auth=require('../middlewares/auth');
+
 
 router.post('/', async (req, res)=>{
 //validation for the user model
@@ -17,7 +19,7 @@ router.post('/', async (req, res)=>{
     if(!validPassword) return res.status(400).send("Invalid user name or password");
     //valid login
     const token=user.generateAuthToken();
-    res.status(200).send(token);
+    res.header('x-auth-token', token).send(true);
 });
 //to distinguish from the valication in the user model. this function is to validate the request
 function validate(req){

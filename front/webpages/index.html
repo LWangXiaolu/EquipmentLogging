@@ -57,8 +57,8 @@
                         }),
                     processData: false,
                         success: function (result) {
-                          console.log(result);
-                           return location.href = "detailProject.html";
+                          //verified ok, returned result should have token in the header
+                           return location.href = "testingSite.html";
                             },
                         error: function (xhr, ajaxOptions, thrownError) {
                             console.log(xhr.responseText);
